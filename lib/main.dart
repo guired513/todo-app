@@ -27,6 +27,12 @@ class ToDoHomeState extends State<ToDoHome> {
   final TextEditingController _taskController = TextEditingController();
   List<Map<String, dynamic>> _tasks = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
   void _addTask() {
     String task = _taskController.text.trim();
     if (task.isNotEmpty) {
