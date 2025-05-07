@@ -69,9 +69,33 @@ class ToDoHomeState extends State<ToDoHome> {
               child: ListView.builder(
                 itemCount: _tasks.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(_tasks[index]),
+                  final task = _tasks[index];
+
+                  return Dismissible(
+                    key: Key(task + index.toString()), // unique key
+                    direction: DismissDirection.endToStart, // swipe left
+                    onDismissed: (direction) {
+                      setState(() {
+                        _tasks.removeAt(index);
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Task deleted'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Icon(Icons.delete, color: Colors.white),
+                    ),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(task),
+                      ),
                     ),
                   );
                 },
