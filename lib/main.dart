@@ -7,6 +7,7 @@ void main() {
   runApp(ToDoApp());
 }
 
+
 class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -203,4 +204,56 @@ class ToDoHomeState extends State<ToDoHome> {
       ),
     );
   }
+  Widget _buildTaskTile(Map<String, dynamic> task, int index) {
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 300),
+      transitionBuilder: (child, animation) => FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+      child: Dismissible(
+        key: Key(task['title'] + index.toString()),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          setState(() {
+            _tasks.remove(task);
+          });
+          _saveTasks();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Task deleted')),
+          );
+        },
+        background: Container(
+          color: Colors.red,
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Icon(Icons.delete, color: Colors.white),
+        ),
+        child: Card(
+          elevation: 2,
+          margin: EdgeInsets.symmetric(vertical: 4),
+          child: CheckboxListTile(
+            title: Text(
+              task['title'],
+              style: TextStyle(
+                fontSize: 16,
+                decoration: task['isDone']
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+                color: task['isDone'] ? Colors.grey : Colors.black87,
+              ),
+            ),
+            value: task['isDone'],
+            onChanged: (bool? value) {
+              setState(() {
+                task['isDone'] = value!;
+              });
+              _saveTasks();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
 }
