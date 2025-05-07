@@ -137,7 +137,22 @@ class ToDoHomeState extends State<ToDoHome> {
              
             // Task List
             Expanded(
-              child: ListView.builder(
+              child: filteredTasks.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.inbox_rounded, size: 80, color: Colors.grey),
+                        SizedBox(height: 16),
+                        Text(
+                          'No tasks to show!',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  )
+              
+              : ListView.builder(
                 itemCount: filteredTasks.length,
                 itemBuilder: (context, index) {
                   final task = filteredTasks[index];
