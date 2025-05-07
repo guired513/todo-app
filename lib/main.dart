@@ -72,18 +72,15 @@ class ToDoHomeState extends State<ToDoHome> {
                   final task = _tasks[index];
 
                   return Dismissible(
-                    key: Key(task + index.toString()), // unique key
-                    direction: DismissDirection.endToStart, // swipe left
+                    key: Key(task['title'] + index.toString()),
+                    direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       setState(() {
                         _tasks.removeAt(index);
                       });
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Task deleted'),
-                          duration: Duration(seconds: 2),
-                        ),
+                        SnackBar(content: Text('Task deleted')),
                       );
                     },
                     background: Container(
@@ -93,8 +90,20 @@ class ToDoHomeState extends State<ToDoHome> {
                       child: Icon(Icons.delete, color: Colors.white),
                     ),
                     child: Card(
-                      child: ListTile(
-                        title: Text(task),
+                      child: CheckboxListTile(
+                        title: Text(
+                          task['title'],
+                          style: TextStyle(
+                            decoration:
+                                task['isDone'] ? TextDecoration.lineThrough : TextDecoration.none,
+                          ),
+                        ),
+                        value: task['isDone'],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            task['isDone'] = value!;
+                          });
+                        },
                       ),
                     ),
                   );
