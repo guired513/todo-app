@@ -28,7 +28,7 @@ class ToDoHomeState extends State<ToDoHome> {
     String task = _taskController.text.trim();
     if (task.isNotEmpty) {
       setState(() {
-        _tasks.add(task);
+        _tasks.add({'title': task, 'isDone': false});
         _taskController.clear();
       });
     }
