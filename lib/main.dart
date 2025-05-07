@@ -37,6 +37,28 @@ class ToDoHomeState extends State<ToDoHome> {
     }
   }
 
+  // Save tasks to shared_preferences
+  void _saveTasks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> taskStrings =
+        _tasks.map((task) => jsonEncode(task)).toList();
+    await prefs.setStringList('tasks', taskStrings);
+  }
+
+  // Load tasks from shared_preferences
+  void _loadTasks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? taskStrings = prefs.getStringList('tasks');
+
+    if (taskStrings != null) {
+      setState(() {
+        _tasks = taskStrings
+            .map((taskString) => jsonDecode(taskString) as Map<String, dynamic>)
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
