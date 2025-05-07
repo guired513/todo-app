@@ -10,6 +10,7 @@ void main() {
 class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'ToDo App',
       theme: ThemeData(primarySwatch: Colors.indigo),
@@ -26,6 +27,8 @@ class ToDoHome extends StatefulWidget {
 class ToDoHomeState extends State<ToDoHome> {
   final TextEditingController _taskController = TextEditingController();
   List<Map<String, dynamic>> _tasks = [];
+
+  String _filter = 'all'; // Possible values: all, active, completed
 
   @override
   void initState() {
@@ -68,6 +71,13 @@ class ToDoHomeState extends State<ToDoHome> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> filteredTasks = _tasks.where((task) {
+      if (_filter == 'all') return true;
+      if (_filter == 'active') return task['isDone'] == false;
+      if (_filter == 'completed') return task['isDone'] == true;
+      return true;
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('ToDo List'),
@@ -96,12 +106,41 @@ class ToDoHomeState extends State<ToDoHome> {
               ],
             ),
             SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FilterChip(
+                  label: Text('All'),
+                  selected: _filter == 'all',
+                  onSelected: (_) {
+                    setState(() => _filter = 'all');
+                  },
+                ),
+                FilterChip(
+                  label: Text('Active'),
+                  selected: _filter == 'active',
+                  onSelected: (_) {
+                    setState(() => _filter = 'active');
+                  },
+                ),
+                FilterChip(
+                  label: Text('Completed'),
+                  selected: _filter == 'completed',
+                  onSelected: (_) {
+                    setState(() => _filter = 'completed');
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+             
             // Task List
             Expanded(
               child: ListView.builder(
-                itemCount: _tasks.length,
+                itemCount: filteredTasks.length,
                 itemBuilder: (context, index) {
-                  final task = _tasks[index];
+                  final task = filteredTasks[index];
 
                   return Dismissible(
                     key: Key(task['title'] + index.toString()),
