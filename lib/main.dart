@@ -22,7 +22,7 @@ class ToDoHome extends StatefulWidget {
 
 class ToDoHomeState extends State<ToDoHome> {
   final TextEditingController _taskController = TextEditingController();
-  List<String> _tasks = [];
+  List<Map<String, dynamic>> _tasks = [];
 
   void _addTask() {
     String task = _taskController.text.trim();
