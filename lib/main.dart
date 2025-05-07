@@ -104,6 +104,7 @@ class ToDoHomeState extends State<ToDoHome> {
                       setState(() {
                         _tasks.removeAt(index);
                       });
+                      _saveTasks(); // hook to save task
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Task deleted')),
@@ -129,6 +130,7 @@ class ToDoHomeState extends State<ToDoHome> {
                           setState(() {
                             task['isDone'] = value!;
                           });
+                          _saveTasks(); // hook to save task
                         },
                       ),
                     ),
