@@ -34,6 +34,7 @@ class ToDoHomeState extends State<ToDoHome> {
         _tasks.add({'title': task, 'isDone': false});
         _taskController.clear();
       });
+      _saveTasks(); // hook to save task
     }
   }
 
