@@ -78,10 +78,11 @@ class ToDoHomeState extends State<ToDoHome> {
       if (_filter == 'completed') return task['isDone'] == true;
       return true;
     }).toList();
-
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('ToDo List'),
+        elevation: 4,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -94,9 +95,11 @@ class ToDoHomeState extends State<ToDoHome> {
                   child: TextField(
                     controller: _taskController,
                     decoration: InputDecoration(
-                      labelText: 'Enter a task',
-                      border: OutlineInputBorder(),
-                    ),
+                    labelText: 'Enter a task',
+                    hintText: 'e.g. Buy groceries',
+                    border: OutlineInputBorder(),
+                  ), // inputdecoration
+                    onSubmitted: (_) => _addTask(),
                   ),
                 ),
                 SizedBox(width: 10),
