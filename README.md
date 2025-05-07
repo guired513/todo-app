@@ -20,7 +20,6 @@ A minimal and user-friendly mobile ToDo List app built using Flutter and Dart. T
 You can install the app directly via the APK:
 
 👉 [Download ToDo App APK](https://drive.google.com/file/d/1vDKR1cSgkq7_vVtg0VRKvmuNdd6Gt3LP/view?usp=drive_link)  
-*(Replace the link above with your Google Drive shared APK link)*
 
 ---
 
