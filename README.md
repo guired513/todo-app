@@ -47,7 +47,7 @@ You can install the app directly via the APK:
 To run locally:
 
 ```bash
-git clone https://github.com/your-username/todo_app.git
+git clone https://github.com/guired513/todo_app.git
 cd todo_app
 flutter pub get
 flutter run
